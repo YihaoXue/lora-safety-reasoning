@@ -187,11 +187,11 @@ list_seed=(0 1 2 3 4 5 6 7)
 tasks=("gpqa_diamond_better_prompt" "AIME")
 
 for ckpt_id in {500..5000..500} do
+    lora_path="../finetuned_models/deepseek-ai_DeepSeek-R1-Distill-Qwen-14B/$lora_name/checkpoint-$ckpt_id"
+    merged_path="../finetuned_models/deepseek-ai_DeepSeek-R1-Distill-Qwen-14B/$lora_name/checkpoint-$ckpt_id"_merged
+    CUDA_VISIBLE_DEVICES=$gpus python lora_conversion.py --base_model_path $model --lora_model_path $lora_path
+    echo $merged_path
     for seed in "${list_seed[@]}"; do
-        lora_path="../finetuned_models/deepseek-ai_DeepSeek-R1-Distill-Qwen-14B/$lora_name/checkpoint-$ckpt_id"
-        merged_path="../finetuned_models/deepseek-ai_DeepSeek-R1-Distill-Qwen-14B/$lora_name/checkpoint-$ckpt_id"_merged
-        CUDA_VISIBLE_DEVICES=$gpus python lora_conversion.py --base_model_path $model --lora_model_path $lora_path
-        echo $merged_path
         for task in "${tasks[@]}"; do
             output_path="results/seed_$seed/$task/$lora_name/checkpoint-$ckpt_id"
             CUDA_VISIBLE_DEVICES=$gpus lm_eval --model vllm \
