@@ -6,6 +6,17 @@ This repository contains the data and code to reproduce the results from the pap
 
 Please check back later for updates.
 
+## Overview
+
+You can use the code in this repository to compare LoRA and full-model fine-tuning for performing safety alignment on reasoning LLMs. We find that LoRA achieves strong safety alignment without harming reasoning performance.
+
+In addition, the code allows you to experiment with different LoRA configurations. Our findings show that:
+- Rank-1 updates are sufficient to achieve the best balance between reasoning and safety.
+- The up-projection layers are the most critical, and applying LoRA to them alone can yield even better results.
+- Middle layers contribute most effectively to safety alignment, compared to early or late layers.
+
+More results and analysis can be found in our [paper](https://arxiv.org/abs/2507.17075).
+
 ## 📦 Installation
 
 The minimal required packages are listed in `environment.yml`. You can run `conda env create -f environment.yml` for easy setup with Conda.
